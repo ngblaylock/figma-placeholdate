@@ -1,0 +1,142 @@
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
+  integrity="sha512-NhSC1YmyruXifcj/KFRWoC561YpHpc5Jtzgvbuzx5VozKpWvQ+4nXhPdFgmx8xqexRcpAglTj9sIBWINXa8x5w=="
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+/>
+<style>
+  [v-cloak] {
+    display: none;
+  }
+  body {
+    font-family: sans-serif;
+    padding: 10px;
+  }
+  input {
+    display: block;
+    width: 100%;
+    padding: 8px 12px;
+    border-radius: 4px;
+    border: 1px solid #dddddd;
+  }
+  button:focus,
+  input:focus {
+    outline-color: #0e5faf;
+  }
+  .btn {
+    padding: 8px 12px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    transition: 0.2s;
+  }
+  .btn:hover {
+    cursor: pointer;
+  }
+  .btn-blue {
+    background: #0f2439;
+    color: white;
+  }
+  .btn-blue:hover {
+    background: #113253;
+  }
+  .btn-clear {
+    padding: 8px 12px;
+    border: 1px solid transparent;
+    background: transparent;
+  }
+  .btn-clear:hover {
+    background: #f8f8f8;
+  }
+  .help circle,
+  .help path {
+    transition: 0.2s;
+  }
+  .help:hover circle {
+    fill: #11508f;
+  }
+  .help:hover path {
+    fill: white;
+  }
+</style>
+
+<div id="app" v-cloak>
+  <form @submit.prevent="insertDates">
+    <h2>Lorem Date</h2>
+    <label for="date"
+      >Date Format
+      <a
+        class="help"
+        title="day.js formatting documentation"
+        href="https://day.js.org/docs/en/display/format"
+        target="_blank"
+      >
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 16 16"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <circle cx="8" cy="8" r="8" fill="#eeeeee" />
+          <path
+            d="M6.99363 9.82124C6.99363 9.16712 7.06369 8.65188 7.20382 8.27554C7.34395 7.89471 7.57113 7.56541 7.88535 7.28763C8.19958 7.00986 8.43737 6.75672 8.59873 6.52823C8.76433 6.29525 8.84713 6.03987 8.84713 5.7621C8.84713 5.08557 8.57113 4.74731 8.01911 4.74731C7.76433 4.74731 7.55839 4.84588 7.40127 5.04301C7.24416 5.24014 7.16136 5.50672 7.15287 5.84274H5C5.00849 4.94668 5.27601 4.25 5.80255 3.75269C6.32909 3.2509 7.06794 3 8.01911 3C8.96603 3 9.69851 3.23073 10.2166 3.6922C10.7389 4.15367 11 4.81004 11 5.66129C11 6.03315 10.9299 6.37142 10.7898 6.67608C10.6497 6.98073 10.4246 7.29211 10.1146 7.61022L9.38217 8.3293C9.1741 8.53987 9.02972 8.75717 8.94904 8.98118C8.86837 9.20072 8.82378 9.48074 8.81529 9.82124H6.99363ZM6.73248 11.8642C6.73248 11.5327 6.84501 11.2616 7.07006 11.0511C7.29936 10.836 7.58386 10.7285 7.92357 10.7285C8.26327 10.7285 8.54565 10.836 8.7707 11.0511C9 11.2616 9.11465 11.5327 9.11465 11.8642C9.11465 12.1958 9 12.4691 8.7707 12.6841C8.54565 12.8947 8.26327 13 7.92357 13C7.58386 13 7.29936 12.8947 7.07006 12.6841C6.84501 12.4691 6.73248 12.1958 6.73248 11.8642Z"
+            fill="#545454"
+          />
+        </svg> </a
+    ></label>
+    <input v-model="format" id="focus-me" />
+    <p><strong>Example: </strong>{{randomDateFormatted}}</p>
+    <button class="btn btn-blue" type="submit">Insert Date</button>
+    <button class="btn btn-clear" @click="cancel">Cancel</button>
+  </form>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.10.7/dayjs.min.js"
+  integrity="sha512-bwD3VD/j6ypSSnyjuaURidZksoVx3L1RPvTkleC48SbHCZsemT3VKMD39KknPnH728LLXVMTisESIBOAb5/W0Q=="
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+></script>
+<script>
+  var app = new Vue({
+    el: '#app',
+    data() {
+      return {
+        format: 'YYYY-MM-DD',
+      };
+    },
+    mounted() {
+      let el = document.querySelector('#focus-me');
+      el.focus();
+      el.select();
+    },
+    computed: {
+      randomDateFormatted() {
+        return dayjs(this.randomDate()).format(this.format);
+      },
+    },
+    methods: {
+      randomDate() {
+        let start = new Date();
+        let end = new Date();
+        start.setMonth(start.getMonth() - 24);
+        end.setMonth(start.getMonth() + 12);
+        return new Date(
+          start.getTime() + Math.random() * (end.getTime() - start.getTime())
+        );
+      },
+      insertDates() {
+        let dates = [];
+        for (let i = 0; i < 100; i++) {
+          dates.push(dayjs(this.randomDate()).format(this.format));
+        }
+        parent.postMessage({ pluginMessage: { type: 'add-date', dates } }, '*');
+      },
+      cancel() {
+        parent.postMessage({ pluginMessage: { type: 'cancel' } }, '*');
+      },
+    },
+  });
+</script>

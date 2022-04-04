@@ -1,0 +1,17 @@
+{
+  "name": "test-fake-data",
+  "version": "1.0.0",
+  "description": "Your Figma plugin",
+  "main": "code.js",
+  "scripts": {
+    "build": "tsc -p tsconfig.json"
+  },
+  "author": "",
+  "license": "",
+  "devDependencies": {
+    "@figma/plugin-typings": "^1.40.0"
+  },
+  "dependencies": {
+    "dayjs": "^1.10.7"
+  }
+}
