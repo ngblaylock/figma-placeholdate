@@ -7,7 +7,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-figma.showUI(__html__, { height: 230, title: "Placeholdate" });
+figma.showUI(__html__, { height: 230, width: 400, title: "Placeholdate" });
 figma.ui.onmessage = (msg) => __awaiter(this, void 0, void 0, function* () {
     if (msg.type === 'add-date') {
         for (const node of figma.currentPage.selection) {
