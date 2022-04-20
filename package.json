@@ -1,17 +1,16 @@
 {
-  "name": "test-fake-data",
+  "name": "figma-placeholdate",
   "version": "1.0.0",
-  "description": "Your Figma plugin",
+  "description": "A figma plugin to generate placeholder data with custom date formats.",
   "main": "code.js",
   "scripts": {
-    "build": "tsc -p tsconfig.json"
+    "build": "tsc -p tsconfig.json",
+    "watch": "tsc-watch --noClear -p tsconfig.json"
   },
-  "author": "",
-  "license": "",
+  "author": "Nathan Blaylock",
+  "license": "MIT",
   "devDependencies": {
-    "@figma/plugin-typings": "^1.40.0"
-  },
-  "dependencies": {
-    "dayjs": "^1.10.7"
+    "@figma/plugin-typings": "^1.40.0",
+    "tsc-watch": "^5.0.3"
   }
 }

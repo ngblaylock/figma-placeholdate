@@ -1,4 +1,4 @@
-figma.showUI(__html__, {height: 230, title: "Lorem Date"});
+figma.showUI(__html__, {height: 230, title: "Placeholdate"});
 
 figma.ui.onmessage = async (msg) => {
   if (msg.type === 'add-date') {
