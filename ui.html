@@ -119,7 +119,11 @@
         >?</a
       >
     </label>
-    <input x-model="format" id="focus-me" x-init="$nextTick(() => { $el.focus(); $el.select() })" />
+    <input
+      x-model="format"
+      id="focus-me"
+      x-init="$nextTick(() => { $el.focus(); $el.select() })"
+    />
     <p class="example">
       <strong>Example Output: </strong
       ><span x-text="dayjs(getDate()).format(format)"></span>
