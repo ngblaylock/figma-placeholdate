@@ -1,4 +1,14 @@
+let textElementsSelected = 0;
+
+for (const node of figma.currentPage.selection) {
+  if (node.type == 'TEXT') {
+    textElementsSelected++;
+  }
+}
+
 figma.showUI(__html__, {height: 230, width: 400, title: "Placeholdate"});
+
+figma.ui.postMessage(textElementsSelected);
 
 figma.ui.onmessage = async (msg) => {
   if (msg.type === 'add-date') {
@@ -8,7 +18,7 @@ figma.ui.onmessage = async (msg) => {
         for (const font of fonts) {
           await figma.loadFontAsync(font);
         }
-        node.characters = msg.dates[Math.floor(Math.random() * 100)];
+        node.characters = msg.dates.shift();
       }
     }
   }

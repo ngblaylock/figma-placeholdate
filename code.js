@@ -7,7 +7,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+let textElementsSelected = 0;
+for (const node of figma.currentPage.selection) {
+    if (node.type == 'TEXT') {
+        textElementsSelected++;
+    }
+}
 figma.showUI(__html__, { height: 230, width: 400, title: "Placeholdate" });
+figma.ui.postMessage(textElementsSelected);
 figma.ui.onmessage = (msg) => __awaiter(this, void 0, void 0, function* () {
     if (msg.type === 'add-date') {
         for (const node of figma.currentPage.selection) {
@@ -16,7 +23,7 @@ figma.ui.onmessage = (msg) => __awaiter(this, void 0, void 0, function* () {
                 for (const font of fonts) {
                     yield figma.loadFontAsync(font);
                 }
-                node.characters = msg.dates[Math.floor(Math.random() * 100)];
+                node.characters = msg.dates.shift();
             }
         }
     }

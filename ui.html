@@ -86,6 +86,13 @@
 </style>
 
 <script>
+  let nodes = 0;
+
+  onmessage = (event) => {
+    nodes = event.data.pluginMessage;
+    console.log(nodes);
+  };
+
   const getDate = function () {
     let start = dayjs().subtract(2, "year").valueOf();
     let end = dayjs().add(2, "year").valueOf();
@@ -95,9 +102,10 @@
 
   const insertDates = function (format) {
     let dates = [];
-    for (let i = 0; i < 100; i++) {
+    for (let i = 0; i < nodes; i++) {
       dates.push(dayjs(getDate()).format(format));
     }
+    console.log(dates);
     parent.postMessage({ pluginMessage: { type: "add-date", dates } }, "*");
   };
 
