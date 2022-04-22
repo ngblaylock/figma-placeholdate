@@ -174,7 +174,6 @@
 
   onmessage = (event) => {
     nodes = event.data.pluginMessage;
-    console.log(nodes);
   };
 
   const getDate = function (start, end) {
@@ -190,17 +189,15 @@
     for (let i = 0; i < nodes; i++) {
       dates.push(dayjs(getDate(start, end)).format(format));
     }
-    console.log(dates);
     parent.postMessage({ pluginMessage: { type: "add-date", dates } }, "*");
   };
-
+  
   const cancel = function () {
     parent.postMessage({ pluginMessage: { type: "cancel" } }, "*");
   };
-
+  
   const saveToLocalStorage = function(obj) {
-    console.log("Saving?", obj);
-    // window.localStorage.setItem('placeholdate', obj);
+    parent.postMessage({ pluginMessage: { type: "save-data", obj } }, "*");
   }
 </script>
 
@@ -215,7 +212,8 @@
   x-cloak
 >
   <form @submit.prevent="insertDates(format, start, end)">
-    <h1>Placeholdate</h1>
+    
+    <h1><span x-text="window.node"></span>Placeholdate</h1>
     <label for="date"
       >Date Format
       <a
@@ -236,7 +234,7 @@
       ><span x-text="dayjs(getDate(start, end)).format(format)"></span>
     </p>
     <button class="btn btn-blue" type="submit">Insert Date</button>
-    <button class="btn btn-clear" @click="cancel">Cancel</button>
+    <button class="btn btn-clear" @click.prevent="cancel">Cancel</button>
   </form>
 
   <div class="dropdown-container" x-data="{expanded:false}">

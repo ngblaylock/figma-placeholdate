@@ -26,6 +26,17 @@ figma.ui.onmessage = (msg) => __awaiter(this, void 0, void 0, function* () {
                 node.characters = msg.dates.shift();
             }
         }
+        figma.closePlugin();
     }
-    figma.closePlugin();
+    if (msg.type === 'cancel') {
+        figma.closePlugin();
+    }
+    if (msg.type === 'save-data') {
+        figma.clientStorage.setAsync('placeholdate', msg.obj).then(() => {
+            figma.clientStorage.getAsync('placeholdate').then(res => {
+                // If it doesn't exist, it will return undefined.
+                console.log('placeholdate', res);
+            });
+        });
+    }
 });
