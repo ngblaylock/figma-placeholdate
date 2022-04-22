@@ -14,7 +14,9 @@ for (const node of figma.currentPage.selection) {
     }
 }
 figma.showUI(__html__, { height: 300, width: 350, title: "Placeholdate" });
-figma.ui.postMessage(textElementsSelected);
+figma.clientStorage.getAsync('placeholdate').then(res => {
+    figma.ui.postMessage({ textElementsSelected, clientStorage: res });
+});
 figma.ui.onmessage = (msg) => __awaiter(this, void 0, void 0, function* () {
     if (msg.type === 'add-date') {
         for (const node of figma.currentPage.selection) {

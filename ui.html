@@ -171,13 +171,17 @@
 
 <script>
   let nodes = 0;
+  /**
+  * TODO: I can get the clientStorage data, but can't get it in Alpine
+  */
+  let clientStorage;
 
   onmessage = (event) => {
-    nodes = event.data.pluginMessage;
+    nodes = event.data.pluginMessage.textElementsSelected;
+    clientStorage = event.data.pluginMessage.clientStorage;
   };
 
   const getDate = function (start, end) {
-    console.log(start, end);
     let s = dayjs(start).valueOf();
     let e = dayjs(end).valueOf();
     let random = Math.floor(Math.random() * (e - s + 1)) + s;

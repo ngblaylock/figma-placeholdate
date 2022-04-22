@@ -1,0 +1,11 @@
+{
+  "todo": {
+    "scope": "javascript",
+    "prefix": "todo",
+    "body": [
+      "/**",
+      "* TODO: $1",
+      "*/"
+    ]
+  }
+}
