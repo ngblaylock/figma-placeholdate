@@ -4,8 +4,7 @@ To get started:
 
 1. Run `npm install`
 2. Watch changes in `code.ts` by running `npm run watch`
-3. Build changes one by running `npm run build`
-4. Edit the UI in `ui.html`
+3. Edit the UI in `ui.html`
 
 ## Try it in Figma
 
