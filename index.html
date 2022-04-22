@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script
+      defer
+      src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"
+    ></script>
+    <style>
+      body {
+        background: #fafafa;
+      }
+      .options-container {
+        background: white;
+      }
+      .options {
+        position: relative;
+        max-height: 0;
+        transition: all 0.7s;
+        overflow: hidden;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Alpine Slider Vanilla</h1>
+    <div class="options-container" x-data="{expanded:false}">
+      <button @click="expanded ? expanded = false : expanded = true">
+        Should I use reCAPTCHA v2 or v3?
+      </button>
+
+      <div
+        class="options"
+        :style="expanded ? 'max-height: ' + $el.scrollHeight + 'px' : ''"
+      >
+        <p>
+          reCAPTCHA v2 is not going away! We will continue to fully support and
+          improve security and usability for v2.
+        </p>
+        <p>
+          reCAPTCHA v3 is intended for power users, site owners that want more
+          data about their traffic, and for use cases in which it is not
+          appropriate to show a challenge to the user.
+        </p>
+        <p>
+          For example, a registration page might still use reCAPTCHA v2 for a
+          higher-friction challenge, whereas more common actions like sign-in,
+          searches, comments, or voting might use reCAPTCHA v3. To see more
+          details, see the reCAPTCHA v3 developer guide.
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

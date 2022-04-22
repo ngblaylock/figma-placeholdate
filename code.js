@@ -13,7 +13,7 @@ for (const node of figma.currentPage.selection) {
         textElementsSelected++;
     }
 }
-figma.showUI(__html__, { height: 230, width: 400, title: "Placeholdate" });
+figma.showUI(__html__, { height: 300, width: 350, title: "Placeholdate" });
 figma.ui.postMessage(textElementsSelected);
 figma.ui.onmessage = (msg) => __awaiter(this, void 0, void 0, function* () {
     if (msg.type === 'add-date') {

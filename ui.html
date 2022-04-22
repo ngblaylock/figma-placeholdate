@@ -17,9 +17,36 @@
   [x-cloak] {
     display: none !important;
   }
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+    border: 2px solid #f1f1f1;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
   body {
     font-family: sans-serif;
-    padding: 10px;
+    padding: 1em;
+    overflow-y: scroll;
+  }
+  h1 {
+    text-align: center;
+    color: #a54958;
+    margin-top: 0;
+  }
+  label {
+    display: flex;
+    justify-content: space-between;
   }
   input {
     display: block;
@@ -56,10 +83,6 @@
   .btn-clear:hover {
     background: #f8f8f8;
   }
-  label {
-    display: flex;
-    justify-content: space-between;
-  }
   .help {
     background: darkslategrey;
     width: 16px;
@@ -83,22 +106,66 @@
     font-size: 0.8em;
     margin-top: 0.3em;
   }
-  .options {
+  .dropdown-container {
     background: #f8f8f8;
-    margin-top: 1em;
-    border: 1px solid #d5d6d6;
-    border-radius: .25em;
   }
-  .options h3 {
+  .dropdown-container button {
+    width: 100%;
+    border: 0px;
     padding: 1em;
-    margin: 0;
+    border-radius: 0.25em;
+    text-align: left;
+    cursor: pointer;
+    background: transparent;
+    transition: 0.2s;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
   }
-  .options .row{
-    border-top: 1px solid #d5d6d6;
+  .dropdown-container button:hover {
+    background: rgba(0, 0, 0, 0.02);
+  }
+  .dropdown-container button::after {
+    content: "+";
+  }
+  .dropdown-container button[aria-expanded="true"]::after {
+    content: "\2013";
+  }
+  .dropdown {
+    position: relative;
+    max-height: 0;
+    transition: all 0.7s;
+    overflow: hidden;
+  }
+  .dropdown .row {
     padding: 1em;
+    padding-top: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.03);
   }
-  .option:not(:first-child) {
+  .dropdown label,
+  .dropdown legend {
+    font-weight: bold;
     margin-top: 1em;
+  }
+  .dropdown fieldset {
+    padding: 0;
+    border: 0;
+    margin-top: 1em;
+  }
+  .dropdown fieldset label {
+    margin-top: 0;
+    font-weight: normal;
+    display: inline-block;
+  }
+  .dropdown fieldset input {
+    width: initial;
+    display: initial;
+    margin-right: 1em;
+  }
+  .dropdown fieldset .radio-group{
+    display: flex;
+    align-items: center;
+    margin-top: .5em;
   }
 </style>
 
@@ -110,15 +177,18 @@
     console.log(nodes);
   };
 
-  const getDate = function () {
-    let random = Math.floor(Math.random() * (end - start + 1)) + start;
+  const getDate = function (start, end) {
+    console.log(start, end);
+    let s = dayjs(start).valueOf();
+    let e = dayjs(end).valueOf();
+    let random = Math.floor(Math.random() * (e - s + 1)) + s;
     return new Date(random);
   };
 
-  const insertDates = function (format) {
+  const insertDates = function (format, start, end) {
     let dates = [];
     for (let i = 0; i < nodes; i++) {
-      dates.push(dayjs(getDate()).format(format));
+      dates.push(dayjs(getDate(start, end)).format(format));
     }
     console.log(dates);
     parent.postMessage({ pluginMessage: { type: "add-date", dates } }, "*");
@@ -127,18 +197,25 @@
   const cancel = function () {
     parent.postMessage({ pluginMessage: { type: "cancel" } }, "*");
   };
+
+  const saveToLocalStorage = function(obj) {
+    console.log("Saving?", obj);
+    // window.localStorage.setItem('placeholdate', obj);
+  }
 </script>
 
 <div
   x-data="{
     format: 'YYYY-MM-DD', 
     start: dayjs().subtract(2, 'year').format('YYYY-MM-DD'),
-    end: dayjs().add(2, 'year').format('YYYY-MM-DD')
+    end: dayjs().add(2, 'year').format('YYYY-MM-DD'),
+    sort: 'rand',
   }"
+   x-effect="saveToLocalStorage({format, start, end, sort})"
   x-cloak
 >
-  <form @submit.prevent="insertDates(format)">
-    <h2>Placeholdate</h2>
+  <form @submit.prevent="insertDates(format, start, end)">
+    <h1>Placeholdate</h1>
     <label for="date"
       >Date Format
       <a
@@ -156,23 +233,49 @@
     />
     <p class="example">
       <strong>Example Output: </strong
-      ><span x-text="dayjs(getDate()).format(format)"></span>
+      ><span x-text="dayjs(getDate(start, end)).format(format)"></span>
     </p>
     <button class="btn btn-blue" type="submit">Insert Date</button>
     <button class="btn btn-clear" @click="cancel">Cancel</button>
-    <div class="options">
-      <!-- Look at this... https://codepen.io/QJan84/pen/zYvRMMw -->
-      <h3>Options</h3>
+  </form>
+
+  <div class="dropdown-container" x-data="{expanded:false}">
+    <button
+      @click="expanded ? expanded = false : expanded = true"
+      :aria-expanded="expanded ? true : false"
+      aria-controls="dropdown-content"
+    >
+      Options
+    </button>
+
+    <div
+      class="dropdown"
+      :style="expanded ? 'max-height: ' + $el.scrollHeight + 'px' : ''"
+      id="dropdown-content"
+    >
       <div class="row">
-        <div class="option">
-          <label for="start">Starting Date</label>
-          <input id="start" type="date" x-model="start" />
-        </div>
-        <div class="option">
-          <label for="end">Ending Date</label>
-          <input id="end" type="date" x-model="end" />
-        </div>
+        <label for="start">Starting Date</label>
+        <input id="start" type="date" x-model="start" />
+        <label for="end">Ending Date</label>
+        <input id="end" type="date" x-model="end" />
+      </div>
+      <div class="row">
+        <fieldset>
+          <legend>Order</legend>
+          <div class="radio-group">
+            <input type="radio" id="rand" value="rand" x-model="sort" />
+            <label for="rand">Random</label>
+          </div>
+          <div class="radio-group">
+            <input type="radio" id="asc" value="asc" x-model="sort" />
+            <label for="asc">Ascending</label>
+          </div>
+          <div class="radio-group">
+            <input type="radio" id="desc" value="desc" x-model="sort" />
+            <label for="desc">Descending</label>
+          </div>
+        </fieldset>
       </div>
     </div>
-  </form>
+  </div>
 </div>
