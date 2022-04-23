@@ -6,15 +6,19 @@ for (const node of figma.currentPage.selection) {
   }
 }
 
-figma.showUI(__html__, {height: 300, width: 350, title: "Placeholdate"});
-
+// * Uncomment the following to test new users without clientStorage set
+// figma.clientStorage.deleteAsync('placeholdate').then(res => {
+//   console.log("Deleted", res);
+// })
 
 figma.clientStorage.getAsync('placeholdate').then(res => {
+  figma.showUI(__html__, {height: 300, width: 350, title: "Placeholdate"});
   figma.ui.postMessage({textElementsSelected, clientStorage: res});
 })
 
-figma.ui.onmessage = async (msg) => {
+figma.ui.onmessage = async (msg) => {  
   if (msg.type === 'add-date') {
+    figma.clientStorage.setAsync('placeholdate', msg.clientStorageData)
     for (const node of figma.currentPage.selection) {
       if (node.type == 'TEXT') {
         const fonts = node.getRangeAllFontNames(0, node.characters.length);
@@ -28,13 +32,5 @@ figma.ui.onmessage = async (msg) => {
   }
   if(msg.type === 'cancel'){
     figma.closePlugin();
-  }
-  if(msg.type === 'save-data'){
-    figma.clientStorage.setAsync('placeholdate', msg.obj).then(() => {
-      figma.clientStorage.getAsync('placeholdate').then(res => {
-        // If it doesn't exist, it will return undefined.
-        console.log('placeholdate', res);
-      })
-    })
   }
 };
