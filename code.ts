@@ -18,17 +18,18 @@ figma.clientStorage.getAsync('placeholdate').then(res => {
 
 figma.ui.onmessage = async (msg) => {  
   if (msg.type === 'add-date') {
+    const textNodesSelected = msg.dates.length;
     figma.clientStorage.setAsync('placeholdate', msg.clientStorageData)
     for (const node of figma.currentPage.selection) {
-      if (node.type == 'TEXT') {
+      if (node.type == 'TEXT') {        
         const fonts = node.getRangeAllFontNames(0, node.characters.length);
         for (const font of fonts) {
           await figma.loadFontAsync(font);
         }
         node.characters = msg.dates.shift();
       }
-    }
-    figma.closePlugin();
+    }    
+    figma.closePlugin(!textNodesSelected? 'Oops! Make sure at least one text layer is selected.' : '');
   }
   if(msg.type === 'cancel'){
     figma.closePlugin();
