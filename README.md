@@ -10,7 +10,7 @@ To get started:
 
 Open any project file in the desktop version and go to `Figma > Plugins > Development > Import plugin from manifest...`. Select the `manifest.json` from this directory. You then will be able to test out the plugin.
 
-## Publish the changes
+## Publish the Changes
 
 1. Go to Figma's Home page
 2. Click the profile picture
