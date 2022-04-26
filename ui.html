@@ -88,6 +88,11 @@
   .btn-blue:hover {
     background: #113253;
   }
+  .btn-blue:disabled{
+    background: #c7c7c7;
+    color: #616161;
+    cursor: not-allowed;
+  }
   .btn-clear {
     padding: 8px 12px;
     border: 1px solid transparent;
@@ -121,11 +126,12 @@
   }
   .dropdown-container {
     background: #f8f8f8;
+    margin-bottom: 1em;
   }
   .dropdown-container button {
     width: 100%;
     border: 0px;
-    padding: 1em;
+    padding: .75em 1em;
     border-radius: 0.25em;
     text-align: left;
     cursor: pointer;
@@ -181,13 +187,14 @@
     margin-top: 0.5em;
   }
   .alert {
-    background: #d15c5c;
+    background: #CE4536;
     padding: 1em;
     border-radius: 0.25em;
     border: 1px solid rgba(0, 0, 0, 0.2);
     color: white;
     font-weight: bold;
     display: flex;
+    margin-bottom: 1em;
     /* align-items: center; */
   }
   .alert::before {
@@ -349,65 +356,71 @@
           <strong>Example Output: </strong
           ><span x-text="dayjs(getDate()).format($store.data.format)"></span>
         </p>
-        <button class="btn btn-blue" type="submit">Insert Date</button>
-        <button class="btn btn-clear" @click.prevent="cancel">Cancel</button>
-      </form>
-      <div class="dropdown-container" x-data="{expanded:false}">
-        <button
-          @click="expanded ? expanded = false : expanded = true"
-          :aria-expanded="expanded ? true : false"
-          aria-controls="dropdown-content"
-        >
-          Options
-        </button>
-        <div
-          class="dropdown"
-          :style="expanded ? 'max-height: ' + $el.scrollHeight + 'px' : ''"
-          id="dropdown-content"
-        >
-          <div class="row">
-            <label for="start">Starting Date</label>
-            <input id="start" type="date" x-model="$store.data.start" />
-            <label for="end">Ending Date</label>
-            <input id="end" type="date" x-model="$store.data.end" />
-          </div>
-          <div class="row">
-            <fieldset>
-              <legend>Order</legend>
-              <p class="small">
-                The sort order is affected by the time the text layer was created.
-              </p>
-              <div class="radio-group">
-                <input
-                  type="radio"
-                  id="rand"
-                  value="rand"
-                  x-model="$store.data.sort"
-                />
-                <label for="rand">Random</label>
-              </div>
-              <div class="radio-group">
-                <input
-                  type="radio"
-                  id="asc"
-                  value="asc"
-                  x-model="$store.data.sort"
-                />
-                <label for="asc">Ascending</label>
-              </div>
-              <div class="radio-group">
-                <input
-                  type="radio"
-                  id="desc"
-                  value="desc"
-                  x-model="$store.data.sort"
-                />
-                <label for="desc">Descending</label>
-              </div>
-            </fieldset>
+        <div class="dropdown-container" x-data="{expanded:false}">
+          <button
+            type="button"
+            @click="expanded ? expanded = false : expanded = true"
+            :aria-expanded="expanded ? true : false"
+            aria-controls="dropdown-content"
+          >
+            Options
+          </button>
+          <div
+            class="dropdown"
+            :style="expanded ? 'max-height: ' + $el.scrollHeight + 'px' : ''"
+            id="dropdown-content"
+          >
+            <div class="row">
+              <label for="start">Starting Date</label>
+              <input id="start" type="date" x-model="$store.data.start" />
+              <label for="end">Ending Date</label>
+              <input id="end" type="date" x-model="$store.data.end" />
+            </div>
+            <div class="row">
+              <fieldset>
+                <legend>Order</legend>
+                <p class="small">
+                  The sort order is affected by the time the text layer was created.
+                </p>
+                <div class="radio-group">
+                  <input
+                    type="radio"
+                    id="rand"
+                    value="rand"
+                    x-model="$store.data.sort"
+                  />
+                  <label for="rand">Random</label>
+                </div>
+                <div class="radio-group">
+                  <input
+                    type="radio"
+                    id="asc"
+                    value="asc"
+                    x-model="$store.data.sort"
+                  />
+                  <label for="asc">Ascending</label>
+                </div>
+                <div class="radio-group">
+                  <input
+                    type="radio"
+                    id="desc"
+                    value="desc"
+                    x-model="$store.data.sort"
+                  />
+                  <label for="desc">Descending</label>
+                </div>
+              </fieldset>
+            </div>
           </div>
         </div>
-      </div>
+        <template x-if="$store.data.start > $store.data.end">
+          <div class="alert">
+            The option for start date cannot be after the end date.
+          </div>
+        </template>
+        <button class="btn btn-blue" type="submit" :disabled="$store.data.start > $store.data.end">Insert Date</button>
+        <button class="btn btn-clear" type="button" @click="cancel">Cancel</button>
+      </form>
     </div>
   </template>
   <template x-if="!$store.data.nodes">
