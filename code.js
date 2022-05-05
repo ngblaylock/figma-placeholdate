@@ -13,6 +13,7 @@ for (const node of figma.currentPage.selection) {
         textElementsSelected++;
     }
 }
+console.log("Nathan");
 // * Uncomment the following to test new users without clientStorage set
 // figma.clientStorage.deleteAsync('placeholdate').then(res => {
 //   console.log("Deleted", res);
