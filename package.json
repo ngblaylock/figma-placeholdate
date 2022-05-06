@@ -13,6 +13,7 @@
   "license": "MIT",
   "devDependencies": {
     "@figma/plugin-typings": "^1.44.0",
+    "chalk": "^4.1.2",
     "node-watch": "^0.7.3",
     "sass": "^1.51.0",
     "tsc-watch": "^5.0.3"
