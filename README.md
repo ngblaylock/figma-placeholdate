@@ -3,8 +3,11 @@
 To get started:
 
 1. Run `npm install`
-2. Watch changes in `code.ts` by running `npm run watch`
-3. Edit the UI in `ui.html`
+2. Watch changes in `code.ts` and `./build-ui`: `npm run watch`
+
+## Editing the UI
+
+When editing the UI, only edit changes in the `build-ui` directory. Running `npm run watch` will watch for changes there (as well as `code.ts`) and auto generate the ui.html file. This allows you to use Sass for styles and chunk up the other content as needed.
 
 ## Try it in Figma
 

@@ -4,10 +4,10 @@
   "description": "A figma plugin to generate placeholder data with custom date formats.",
   "main": "code.js",
   "scripts": {
-    "build": "npm run build:code & npm run build:ui",
     "build:code": "tsc -p tsconfig.json",
-    "build:ui": "node ./_build",
-    "watch": "tsc-watch --noClear -p tsconfig.json"
+    "watch": "npm run watch:code & npm run watch:ui",
+    "watch:code": "tsc-watch --noClear -p tsconfig.json",
+    "watch:ui": "node ./_build"
   },
   "author": "Nathan Blaylock",
   "license": "MIT",
