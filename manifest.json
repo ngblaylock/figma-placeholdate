@@ -1,7 +1,7 @@
 {
   "name": "Placeholdate",
   "id": "1098444899707858859",
-  "api": "1.0.0",
+  "api": "1.0.1",
   "main": "code.js",
   "editorType": [
     "figma"

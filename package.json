@@ -1,6 +1,6 @@
 {
   "name": "figma-placeholdate",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A figma plugin to generate placeholder data with custom date formats.",
   "main": "code.js",
   "scripts": {
