@@ -1,3 +1,9 @@
+$primary: #CE4536;
+$light: #f1f1f1;
+$gray: #888484;
+$border: darken($light, 20);
+$blue: #0e2842;
+
 [x-cloak] {
   display: none !important;
 }
@@ -6,17 +12,17 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: $light;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #888;
+  background: $gray;
   border-radius: 10px;
-  border: 2px solid #f1f1f1;
+  border: 2px solid $light;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #555;
+  background: darken($gray, 10);
 }
 body {
   font-family: sans-serif;
@@ -50,11 +56,11 @@ input {
   width: 100%;
   padding: 8px 12px;
   border-radius: 4px;
-  border: 1px solid #dddddd;
+  border: 1px solid $border;
 }
 button:focus,
 input:focus {
-  outline-color: #0e5faf;
+  outline-color: $primary;
 }
 .btn {
   padding: 8px 12px;
@@ -66,14 +72,14 @@ input:focus {
   }
 }
 .btn-blue {
-  background: #0f2439;
+  background: $blue;
   color: white;
   &:hover {
-    background: #113253;
+    background: darken($blue, 5);
   }
   &:disabled{
-    background: #c7c7c7;
-    color: #616161;
+    background: $gray;
+    color: white;
     cursor: not-allowed;
   }
 }
@@ -82,11 +88,11 @@ input:focus {
   border: 1px solid transparent;
   background: transparent;
   &:hover {
-    background: #f8f8f8;
+    background: $light;
   }
 }
 .help {
-  background: darkslategrey;
+  background: $blue;
   width: 16px;
   height: 16px;
   border-radius: 16px;
@@ -99,17 +105,17 @@ input:focus {
   font-weight: bold;
   transition: 0.4s;
   &:hover {
-    background: black;
-    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.3);
+    background: darken($blue, 10);
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
   }
 }
 .small {
-  color: grey;
+  color: darken($gray, 5);
   font-size: 0.8em;
   margin-top: 0.5em;
 }
 .dropdown-container {
-  background: #f8f8f8;
+  background: $light;
   margin-bottom: 1em;
   button {
     width: 100%;
@@ -124,7 +130,7 @@ input:focus {
     display: flex;
     justify-content: space-between;
     &:hover {
-      background: rgba(0, 0, 0, 0.02);
+      background: rgba($blue, 0.04);
     }
     &::after {
       content: "+";
@@ -142,7 +148,7 @@ input:focus {
   .row {
     padding: 1em;
     padding-top: 0;
-    border-top: 1px solid rgba(0, 0, 0, 0.03);
+    border-top: 1px solid rgba($blue, 0.1);
   }
   label,
   legend {
@@ -171,7 +177,7 @@ input:focus {
   }
 }
 .alert {
-  background: #CE4536;
+  background: $primary;
   padding: 1em;
   border-radius: 0.25em;
   border: 1px solid rgba(0, 0, 0, 0.2);
@@ -191,7 +197,7 @@ input:focus {
     margin-right: 1em;
     align-items: center;
     justify-content: center;
-    color: #d15c5c;
+    color: $primary;
     font-weight: bold;
   }
 }
