@@ -1,5 +1,7 @@
 # Placeholdate Development
 
+> See the [Placeholdate plugin page](https://www.figma.com/community/plugin/1098444899707858859/Placeholdate) for using Placeholdate in Figma.
+
 To get started:
 
 1. Run `npm install`
