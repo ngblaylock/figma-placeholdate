@@ -4,8 +4,8 @@
 
 To get started:
 
-1. Run `npm install`
-2. Watch changes in `code.ts` and `./build-ui`: `npm run watch`
+1. `npm install`: Install package dependencies
+2. `npm run watch`: Watch changes in `code.ts` and `./build-ui`
 
 ## Editing the UI
 
